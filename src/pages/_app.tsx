@@ -28,6 +28,8 @@ const App = ({ Component, pageProps }) => {
           />
         </Head>
 
+        <br />
+
         <Container maxWidth="sm">
           <Grid container spacing={2}>
             <Grid item xs={3}>

@@ -6,11 +6,11 @@ const Nav = () => {
   return (
     <nav>
       <MenuList>
-        <MenuItem>
-          <Link href="/pack">
+        <Link href="/pack" passHref>
+          <MenuItem LinkComponent={"a"}>
             <ListItemText>Packs</ListItemText>
-          </Link>
-        </MenuItem>
+          </MenuItem>
+        </Link>
       </MenuList>
     </nav>
   );

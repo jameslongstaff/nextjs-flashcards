@@ -1,3 +1,14 @@
+import {
+  Box,
+  Button,
+  FormControl,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -52,40 +63,58 @@ const Pack = () => {
   };
 
   return (
-    <div>
-      <form
-        method="POST"
-        action={packCardCreateEndpoint}
-        onSubmit={(event) => handleCreateSubmit(event)}
-      >
-        <label htmlFor="title">Title</label>
-        <br />
-        <input type="text" name="title" id="title" />
-        <br />
-        <label htmlFor="content">Content</label>
-        <br />
-        <textarea name="content" id="content"></textarea>
-        <br />
-        <button type="submit">Create new card</button>
-      </form>
+    <Paper elevation={1} sx={{ p: 2 }}>
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="h6" component="h2">
+          Pack - {pack?.title}
+        </Typography>
+        <form
+          method="POST"
+          action={packCardCreateEndpoint}
+          onSubmit={(event) => handleCreateSubmit(event)}
+        >
+          <FormControl margin="normal" fullWidth>
+            <TextField
+              name="title"
+              id="title"
+              label="title"
+              variant="outlined"
+              size="small"
+              fullWidth
+            />
+          </FormControl>
 
-      <hr />
+          <TextField
+            name="content"
+            id="content"
+            label="content"
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+
+          <Button type="submit" variant="outlined" sx={{ mt: 2 }}>
+            Create new card
+          </Button>
+        </form>
+      </Box>
 
       {!!pack && cards.length
         ? cards.map((card) => {
             return (
-              <div key={card.id}>
-                <Link href={`/card/${card.id}`}>
-                  <a>
-                    {card.id} - {card.title} - {card.content}
-                  </a>
+              <List>
+                <Link href={`/card/${card.id}`} passHref>
+                  <ListItem button key={card.id} component="a">
+                    <ListItemText
+                      primary={`${card.id} - ${card.title} - ${card.content}`}
+                    />
+                  </ListItem>
                 </Link>
-                <br />
-              </div>
+              </List>
             );
           })
         : null}
-    </div>
+    </Paper>
   );
 };
 

@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -25,21 +25,27 @@ const Packs = () => {
   }, []);
 
   return (
-    <div>
-      {!!packs && packs.length
-        ? packs.map((pack) => {
-            return (
-              <List>
-                <ListItem button key={pack.id}>
-                  <Link href={`/pack/${pack.id}`}>
-                    <ListItemText primary={`${pack.id} - ${pack.title}`} />
+    <>
+      <Paper elevation={1} sx={{ p: 2 }}>
+        <Typography variant="h6" component="h2" p={2}>
+          Packs
+        </Typography>
+
+        {!!packs && packs.length
+          ? packs.map((pack) => {
+              return (
+                <List>
+                  <Link href={`/pack/${pack.id}`} passHref>
+                    <ListItem button key={pack.id} component="a">
+                      <ListItemText primary={`${pack.id} - ${pack.title}`} />
+                    </ListItem>
                   </Link>
-                </ListItem>
-              </List>
-            );
-          })
-        : null}
-    </div>
+                </List>
+              );
+            })
+          : null}
+      </Paper>
+    </>
   );
 };
 

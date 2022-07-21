@@ -2,6 +2,14 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 const Card = () => {
   const router = useRouter();
@@ -47,34 +55,48 @@ const Card = () => {
   };
 
   return (
-    <div>
+    <Paper elevation={1} sx={{ p: 2 }}>
+      <Typography variant="h6" component="h2">
+        Update card
+      </Typography>
       {!!card ? (
         <form
           method="PUT"
           action={packCardEndpoint}
           onSubmit={(event) => handleUpdateSubmit(event)}
         >
-          <label htmlFor="title">Title</label>
-          <br />
-          <input
-            type="text"
-            name="title"
-            id="title"
-            defaultValue={card.title}
-          />
-          <br />
-          <label htmlFor="content">Content</label>
-          <br />
-          <textarea
-            name="content"
-            defaultValue={card.content}
-            id="content"
-          ></textarea>
-          <br />
-          <button type="submit">Update card</button>
+          <FormControl margin="normal" fullWidth>
+            <TextField
+              name="title"
+              id="title"
+              label="title"
+              variant="outlined"
+              size="small"
+              fullWidth
+              defaultValue={card.title}
+            />
+          </FormControl>
+
+          <FormControl margin="normal" fullWidth>
+            <TextField
+              name="content"
+              id="content"
+              label="content"
+              variant="outlined"
+              size="small"
+              fullWidth
+              rows={3}
+              multiline
+              defaultValue={card.content}
+            />
+          </FormControl>
+
+          <Button type="submit" variant="outlined">
+            Update card
+          </Button>
         </form>
       ) : null}
-    </div>
+    </Paper>
   );
 };
 
