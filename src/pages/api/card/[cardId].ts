@@ -20,7 +20,7 @@ export default async function handler(
   if (req.method === "PUT") {
     const body = JSON.parse(req.body);
 
-    const card = { ...body, cardId };
+    const card = { ...body };
 
     await updateCard(cardId as string, card);
 

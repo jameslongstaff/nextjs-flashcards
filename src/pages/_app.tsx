@@ -30,7 +30,7 @@ const App = ({ Component, pageProps }) => {
 
         <br />
 
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
           <Grid container spacing={2}>
             <Grid item xs={3}>
               <Nav />

@@ -1,4 +1,11 @@
-import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
+import {
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -27,7 +34,7 @@ const Packs = () => {
   return (
     <>
       <Paper elevation={1} sx={{ p: 2 }}>
-        <Typography variant="h6" component="h2" p={2}>
+        <Typography variant="h6" component="h2">
           Packs
         </Typography>
 
@@ -37,7 +44,7 @@ const Packs = () => {
                 <List>
                   <Link href={`/pack/${pack.id}`} passHref>
                     <ListItem button key={pack.id} component="a">
-                      <ListItemText primary={`${pack.id} - ${pack.title}`} />
+                      <ListItemText primary={`${pack.title}`} />
                     </ListItem>
                   </Link>
                 </List>

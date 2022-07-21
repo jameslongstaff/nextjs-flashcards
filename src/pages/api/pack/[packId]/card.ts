@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { v4 } from "uuid";
-import { createCard, getCard } from "../../../../functions/persistent/card";
+import {
+  createCard,
+  getCard,
+  updateCard,
+} from "../../../../functions/persistent/card";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,9 +13,9 @@ export default async function handler(
   const { packId } = req.query;
 
   if (req.method === "GET") {
-    const pack = await getCard(packId as string);
+    const card = await getCard(packId as string);
 
-    res.status(200).json({ status: "success", data: pack });
+    res.status(200).json({ status: "success", data: card });
   }
 
   if (req.method === "POST") {
@@ -25,6 +29,21 @@ export default async function handler(
     };
 
     await createCard(card);
+
+    res.status(200).json({ status: "success", data: card });
+  }
+
+  if (req.method === "PUT") {
+    const body = JSON.parse(req.body);
+
+    const card = {
+      id: body.id,
+      title: body.title,
+      content: body.content,
+      packId: packId as string,
+    };
+
+    await updateCard(packId as string, card);
 
     res.status(200).json({ status: "success", data: card });
   }

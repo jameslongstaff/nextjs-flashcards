@@ -1,3 +1,10 @@
+import {
+  Button,
+  FormControl,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import React from "react";
 
@@ -20,19 +27,31 @@ const CreatePack = () => {
   };
 
   return (
-    <div>
+    <Paper elevation={1} sx={{ p: 2 }}>
+      <Typography variant="h6" component="h2">
+        Create pack
+      </Typography>
+
       <form
         method="PUT"
         action={packEndpoint}
         onSubmit={(event) => handleCreateSubmit(event)}
       >
-        <label htmlFor="title">Title</label>
-        <br />
-        <input type="text" name="title" id="title" />
-        <br />
-        <button type="submit">Create pack</button>
+        <FormControl margin="normal" fullWidth>
+          <TextField
+            name="title"
+            id="title"
+            label="title"
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+        </FormControl>
+        <Button type="submit" variant="outlined" sx={{ my: 2 }}>
+          Create pack
+        </Button>
       </form>
-    </div>
+    </Paper>
   );
 };
 

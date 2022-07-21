@@ -11,6 +11,12 @@ const Nav = () => {
             <ListItemText>Packs</ListItemText>
           </MenuItem>
         </Link>
+
+        <Link href={`/pack/create`}>
+          <MenuItem LinkComponent={"a"}>
+            <ListItemText>Create pack</ListItemText>
+          </MenuItem>
+        </Link>
       </MenuList>
     </nav>
   );

@@ -15,17 +15,16 @@ const Card = () => {
   const router = useRouter();
   const [card, setCard] = useState(undefined);
 
-  const packEndpoint = `/api/pack/${router.query.cardId}`;
-  const packCardEndpoint = `${packEndpoint}/card`;
+  const cardEndpoint = `/api/card/${router.query.cardId}`;
 
   useEffect(() => {
     const fetchData = async () => {
       if (router.query.cardId) {
         const fetchParams = {
-          method: "Get",
+          method: "GET",
         };
 
-        const packCardRes = await fetch(packCardEndpoint, fetchParams);
+        const packCardRes = await fetch(cardEndpoint, fetchParams);
 
         const packCardResponse = await packCardRes.json();
 
@@ -42,9 +41,10 @@ const Card = () => {
     const data = {
       title: event.target.title.value,
       content: event.target.content.value,
+      packId: card.packId,
     };
 
-    const res = await fetch(packEndpoint, {
+    const res = await fetch(cardEndpoint, {
       method: "PUT",
       body: JSON.stringify(data),
     });
@@ -60,11 +60,7 @@ const Card = () => {
         Update card
       </Typography>
       {!!card ? (
-        <form
-          method="PUT"
-          action={packCardEndpoint}
-          onSubmit={(event) => handleUpdateSubmit(event)}
-        >
+        <form onSubmit={(event) => handleUpdateSubmit(event)}>
           <FormControl margin="normal" fullWidth>
             <TextField
               name="title"

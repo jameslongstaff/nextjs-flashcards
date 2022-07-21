@@ -30,12 +30,12 @@ export const getCardsByPackId = async (packId: string) => {
   return cards;
 };
 
-export const updateCard = async (id: string, pack: Card): Promise<void> => {
+export const updateCard = async (id: string, card: Card): Promise<void> => {
   const prisma = new PrismaClient();
 
-  await prisma.pack.update({
+  await prisma.card.update({
     where: { id },
-    data: pack,
+    data: card,
   });
 
   await prisma.$disconnect();
@@ -44,7 +44,7 @@ export const updateCard = async (id: string, pack: Card): Promise<void> => {
 export const deleteCard = async (id: string): Promise<void> => {
   const prisma = new PrismaClient();
 
-  await prisma.pack.delete({ where: { id } });
+  await prisma.card.delete({ where: { id } });
 
   prisma.$disconnect();
 };
