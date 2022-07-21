@@ -9,26 +9,26 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id } = req.query;
+  const { packId } = req.query;
 
   if (req.method === "PUT") {
     const body = JSON.parse(req.body);
 
-    const pack = { ...body, id };
+    const pack = { ...body, packId };
 
-    await updatePack(id as string, pack);
+    await updatePack(packId as string, pack);
 
     res.status(200).json({ status: "success", data: pack });
   }
 
   if (req.method === "GET") {
-    const pack = await getPack(id as string);
+    const pack = await getPack(packId as string);
 
     res.status(200).json({ status: "success", data: pack });
   }
 
   if (req.method === "DELETE") {
-    await deletePack(id as string);
+    await deletePack(packId as string);
     res.status(200).json({ status: "success" });
   }
 }

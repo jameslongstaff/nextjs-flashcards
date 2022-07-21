@@ -1,5 +1,5 @@
+import { List, ListItem, ListItemText } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
 
@@ -24,48 +24,18 @@ const Packs = () => {
     fetchData();
   }, []);
 
-  const handleCreateSubmit = async (event: any) => {
-    event.preventDefault();
-
-    const data = {
-      title: event.target.title.value,
-    };
-
-    const res = await fetch(packEndpoint, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-
-    const response = await res.json();
-
-    setPacks([...packs, { ...response.data }]);
-  };
-
   return (
     <div>
-      <Link href="/pack">
-        <a>Back</a>
-      </Link>
-      <form
-        method="PUT"
-        action={packEndpoint}
-        onSubmit={(event) => handleCreateSubmit(event)}
-      >
-        <label htmlFor="title">Title</label>
-        <br />
-        <input type="text" name="title" id="title" />
-        <br />
-        <button type="submit">Update pack</button>
-      </form>
-
-      <hr />
-
       {!!packs && packs.length
         ? packs.map((pack) => {
             return (
-              <div key={pack.id}>
-                {pack.id} - {pack.title}
-              </div>
+              <List>
+                <ListItem button key={pack.id}>
+                  <Link href={`/pack/${pack.id}`}>
+                    <ListItemText primary={`${pack.id} - ${pack.title}`} />
+                  </Link>
+                </ListItem>
+              </List>
             );
           })
         : null}

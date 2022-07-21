@@ -6,10 +6,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id } = req.query;
+  const { packId } = req.query;
 
   if (req.method === "GET") {
-    const pack = await getCard(id as string);
+    const pack = await getCard(packId as string);
 
     res.status(200).json({ status: "success", data: pack });
   }
@@ -21,7 +21,7 @@ export default async function handler(
       id: v4(),
       title: body.title,
       content: body.content,
-      packId: id as string,
+      packId: packId as string,
     };
 
     await createCard(card);

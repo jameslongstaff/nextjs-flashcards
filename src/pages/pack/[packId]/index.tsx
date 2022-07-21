@@ -8,13 +8,13 @@ const Pack = () => {
   const [pack, setPack] = useState(undefined);
   const [cards, setCards] = useState([]);
 
-  const packEndpoint = `/api/pack/${router.query.id}`;
+  const packEndpoint = `/api/pack/${router.query.packId}`;
   const packCardCreateEndpoint = `${packEndpoint}/card`;
   const packCardsEndpoint = `${packEndpoint}/cards`;
 
   useEffect(() => {
     const fetchData = async () => {
-      if (router.query.id) {
+      if (router.query.packId) {
         const fetchParams = {
           method: "Get",
         };
@@ -31,24 +31,7 @@ const Pack = () => {
     };
 
     fetchData();
-  }, [router.query.id]);
-
-  const handleUpdateSubmit = async (event: any) => {
-    event.preventDefault();
-
-    const data = {
-      title: event.target.title.value,
-    };
-
-    const res = await fetch(packEndpoint, {
-      method: "PUT",
-      body: JSON.stringify(data),
-    });
-
-    const response = await res.json();
-
-    setPack(response.data);
-  };
+  }, [router.query.packId]);
 
   const handleCreateSubmit = async (event: any) => {
     event.preventDefault();
@@ -70,30 +53,6 @@ const Pack = () => {
 
   return (
     <div>
-      <Link href="/pack">
-        <a>Back</a>
-      </Link>
-      {!!pack ? (
-        <form
-          method="PUT"
-          action={packEndpoint}
-          onSubmit={(event) => handleUpdateSubmit(event)}
-        >
-          <label htmlFor="title">Title</label>
-          <br />
-          <input
-            type="text"
-            name="title"
-            id="title"
-            defaultValue={pack.title}
-          />
-          <br />
-          <button type="submit">Update pack</button>
-        </form>
-      ) : null}
-
-      <hr />
-
       <form
         method="POST"
         action={packCardCreateEndpoint}
@@ -116,7 +75,12 @@ const Pack = () => {
         ? cards.map((card) => {
             return (
               <div key={card.id}>
-                {card.id} - {card.title} - {card.content}
+                <Link href={`/card/${card.id}`}>
+                  <a>
+                    {card.id} - {card.title} - {card.content}
+                  </a>
+                </Link>
+                <br />
               </div>
             );
           })

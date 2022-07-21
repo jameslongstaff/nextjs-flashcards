@@ -9,10 +9,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id } = req.query;
+  const { cardId } = req.query;
 
   if (req.method === "GET") {
-    const card = await getCard(id as string);
+    const card = await getCard(cardId as string);
 
     res.status(200).json({ status: "success", data: card });
   }
@@ -20,15 +20,15 @@ export default async function handler(
   if (req.method === "PUT") {
     const body = JSON.parse(req.body);
 
-    const card = { ...body, id };
+    const card = { ...body, cardId };
 
-    await updateCard(id as string, card);
+    await updateCard(cardId as string, card);
 
     res.status(200).json({ status: "success", data: card });
   }
 
   if (req.method === "DELETE") {
-    await deleteCard(id as string);
+    await deleteCard(cardId as string);
     res.status(200).json({ status: "success" });
   }
 }

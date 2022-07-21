@@ -1,18 +1,18 @@
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
 import { useEffect, useState } from "react";
 
 const Card = () => {
   const router = useRouter();
   const [card, setCard] = useState(undefined);
 
-  const packEndpoint = `/api/pack/${router.query.id}`;
+  const packEndpoint = `/api/pack/${router.query.cardId}`;
   const packCardEndpoint = `${packEndpoint}/card`;
 
   useEffect(() => {
     const fetchData = async () => {
-      if (router.query.id) {
+      if (router.query.cardId) {
         const fetchParams = {
           method: "Get",
         };
@@ -26,7 +26,7 @@ const Card = () => {
     };
 
     fetchData();
-  }, [router.query.id]);
+  }, [router.query.cardId]);
 
   const handleUpdateSubmit = async (event: any) => {
     event.preventDefault();
@@ -48,9 +48,6 @@ const Card = () => {
 
   return (
     <div>
-      <Link href="/pack">
-        <a>Back</a>
-      </Link>
       {!!card ? (
         <form
           method="PUT"
