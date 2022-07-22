@@ -7,19 +7,34 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
 model Pack {
   id String @id
   title String
-  cards Card[]
 }
 
 model Card {
   id String @id
   title String
   content String
-  packId String
-  pack Pack @relation(fields: [packId], references: [id])
+  tags CardTags[]
+}
+
+model Tag {
+  id String @id
+  title String
+  cards CardTags[]
+}
+
+model CardTags {
+  card Card @relation(fields: [cardId], references: [id])
+  cardId String
+  tag Tag @relation(fields: [tagId], references: [id])
+  tagId String
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([cardId, tagId])
 }

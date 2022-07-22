@@ -10,6 +10,26 @@ export const getCard = async (id: string): Promise<Card> => {
   return card;
 };
 
+export const getCards = async (): Promise<Card[]> => {
+  const prisma = new PrismaClient();
+
+  const cards = await prisma.card.findMany();
+
+  prisma.$disconnect;
+
+  return cards;
+};
+
+// export const getCardsByPackId = async (packId: string) => {
+//   const prisma = new PrismaClient();
+
+//   const cards = await prisma.card.findMany({ where: { packId } });
+
+//   prisma.$disconnect;
+
+//   return cards;
+// };
+
 export const createCard = async (card: Card): Promise<void> => {
   const prisma = new PrismaClient();
 
@@ -18,16 +38,6 @@ export const createCard = async (card: Card): Promise<void> => {
   });
 
   prisma.$disconnect();
-};
-
-export const getCardsByPackId = async (packId: string) => {
-  const prisma = new PrismaClient();
-
-  const cards = await prisma.card.findMany({ where: { packId } });
-
-  prisma.$disconnect;
-
-  return cards;
 };
 
 export const updateCard = async (id: string, card: Card): Promise<void> => {

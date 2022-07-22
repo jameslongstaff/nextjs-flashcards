@@ -6,7 +6,7 @@ const Nav = () => {
   return (
     <nav>
       <MenuList>
-        <Link href="/pack" passHref>
+        {/* <Link href="/pack" passHref>
           <MenuItem LinkComponent={"a"}>
             <ListItemText>Packs</ListItemText>
           </MenuItem>
@@ -15,6 +15,18 @@ const Nav = () => {
         <Link href={`/pack/create`}>
           <MenuItem LinkComponent={"a"}>
             <ListItemText>Create pack</ListItemText>
+          </MenuItem>
+        </Link> */}
+
+        <Link href={`/card`}>
+          <MenuItem LinkComponent={"a"}>
+            <ListItemText>Cards</ListItemText>
+          </MenuItem>
+        </Link>
+
+        <Link href={`/tag`}>
+          <MenuItem LinkComponent={"a"}>
+            <ListItemText>Tags</ListItemText>
           </MenuItem>
         </Link>
       </MenuList>

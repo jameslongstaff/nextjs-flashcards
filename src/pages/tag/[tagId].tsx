@@ -1,35 +1,33 @@
-import { Button, FormControl, Paper, TextField } from "@mui/material";
-import Link from "next/link";
+import {
+  Button,
+  FormControl,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
 
-const Pack = () => {
+const Tag = () => {
   const router = useRouter();
-  const [pack, setPack] = useState(undefined);
+  const [tag, setTag] = useState(undefined);
 
-  const packEndpoint = `/api/pack/${router.query.packId}`;
-  const packCardsEndpoint = `${packEndpoint}/cards`;
+  const tagEndpoint = `/api/tag/${router.query.tagId}`;
 
   useEffect(() => {
     const fetchData = async () => {
-      if (router.query.packId) {
+      if (router.query.tagId) {
         const fetchParams = {
-          method: "Get",
+          method: "GET",
         };
-
-        const packRes = await fetch(packEndpoint, fetchParams);
-        const packCardsRes = await fetch(packCardsEndpoint, fetchParams);
-
-        const packResponse = await packRes.json();
-        const packCardsResponse = await packCardsRes.json();
-
-        setPack(packResponse.data);
+        const tagRes = await fetch(tagEndpoint, fetchParams);
+        const tagResponse = await tagRes.json();
+        setTag(tagResponse.data);
       }
     };
-
     fetchData();
-  }, [router.query.packId]);
+  }, [router.query.tagId]);
 
   const handleUpdateSubmit = async (event: any) => {
     event.preventDefault();
@@ -38,22 +36,25 @@ const Pack = () => {
       title: event.target.title.value,
     };
 
-    const res = await fetch(packEndpoint, {
+    const res = await fetch(tagEndpoint, {
       method: "PUT",
       body: JSON.stringify(data),
     });
 
     const response = await res.json();
 
-    setPack(response.data);
+    setTag(response.data);
   };
 
   return (
     <Paper elevation={1} sx={{ p: 2 }}>
-      {!!pack ? (
+      <Typography variant="h6" component="h2">
+        Update tag
+      </Typography>
+      {!!tag ? (
         <form
           method="PUT"
-          action={packEndpoint}
+          action={tagEndpoint}
           onSubmit={(event) => handleUpdateSubmit(event)}
         >
           <FormControl margin="normal" fullWidth>
@@ -64,11 +65,12 @@ const Pack = () => {
               variant="outlined"
               size="small"
               fullWidth
-              defaultValue={pack.title}
+              defaultValue={tag.title}
             />
           </FormControl>
-          <Button type="submit" variant="outlined" sx={{ mt: 2 }}>
-            Create new pack
+
+          <Button type="submit" variant="outlined">
+            Update tag
           </Button>
         </form>
       ) : null}
@@ -76,4 +78,4 @@ const Pack = () => {
   );
 };
 
-export default Pack;
+export default Tag;
