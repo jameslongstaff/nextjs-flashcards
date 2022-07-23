@@ -12,52 +12,22 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import useTags from "../../hooks/useTags";
+import useCard from "../../hooks/useCard";
 
 const Card = () => {
   const router = useRouter();
-  const [card, setCard] = useState(undefined);
-  const [tags, setTags] = useState([]);
+  const tags = useTags();
+  const [card, setCard] = useCard(router.query.cardId);
   const [selectedTags, setSelectedTags] = useState([]);
 
   const cardEndpoint = `/api/card/${router.query.cardId}`;
-  const tagsEndpoint = `/api/tag`;
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (router.query.cardId) {
-        const fetchParams = {
-          method: "GET",
-        };
-
-        const cardRes = await fetch(cardEndpoint, fetchParams);
-
-        const cardResponse = await cardRes.json();
-
-        setCard(cardResponse.data);
-        setSelectedTags(cardResponse.data.tags);
-      }
-    };
-
-    fetchData();
-  }, [router.query.cardId]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (router.query.cardId) {
-        const fetchParams = {
-          method: "GET",
-        };
-
-        const tagsRes = await fetch(tagsEndpoint, fetchParams);
-
-        const tagsResponse = await tagsRes.json();
-
-        setTags(tagsResponse.data);
-      }
-    };
-
-    fetchData();
-  }, [router.query.cardId]);
+    if (card) {
+      setSelectedTags(card.tags);
+    }
+  }, [card]);
 
   const handleUpdateSubmit = async (event: any) => {
     event.preventDefault();
