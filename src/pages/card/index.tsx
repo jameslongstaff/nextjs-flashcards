@@ -2,7 +2,7 @@ import { Button, Paper, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import Listing from "../../components/Listing";
-import mapCardsToListings from "../../functions/mapper/mapCardsToListings";
+import toListing from "../../functions/mapper/cardToListing";
 import useCards from "../../hooks/useCards";
 
 const Cards = () => {
@@ -47,10 +47,7 @@ const Cards = () => {
         />
 
         {!!cards && cards.length && (
-          <Listing
-            items={mapCardsToListings(cards)}
-            deleteHandler={handleDelete}
-          />
+          <Listing items={cards.map(toListing)} deleteHandler={handleDelete} />
         )}
       </Paper>
     </>

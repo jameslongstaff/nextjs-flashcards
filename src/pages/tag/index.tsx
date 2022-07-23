@@ -1,16 +1,9 @@
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
 import Listing from "../../components/Listing";
-import mapTagsToListings from "../../functions/mapper/mapTagsToListings";
+import toListing from "../../functions/mapper/tagToListing";
 
 const Packs = () => {
   const [tags, setTags] = useState([]);
@@ -46,7 +39,7 @@ const Packs = () => {
           </Button>
         </Link>
 
-        {!!tags && tags.length && <Listing items={mapTagsToListings(tags)} />}
+        {!!tags && tags.length && <Listing items={tags.map(toListing)} />}
       </Paper>
     </>
   );
