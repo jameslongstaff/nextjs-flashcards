@@ -1,5 +1,4 @@
 import React from "react";
-import Chip from "@mui/material/Chip";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
@@ -14,22 +13,15 @@ import {
 } from "@mui/material";
 import useTags from "../../hooks/useTags";
 import useCard from "../../hooks/useCard";
+import { cardEndpoint } from "../../functions/endpoints";
+import CardForm from "../../components/CardForm";
 
 const Card = () => {
   const router = useRouter();
-  const tags = useTags();
-  const [card, setCard] = useCard(router.query.cardId);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [tags, tagsLoaded] = useTags();
+  const [card, setCard, cardLoaded] = useCard(router.query.cardId);
 
-  const cardEndpoint = `/api/card/${router.query.cardId}`;
-
-  useEffect(() => {
-    if (card) {
-      setSelectedTags(card.tags);
-    }
-  }, [card]);
-
-  const handleUpdateSubmit = async (event: any) => {
+  const handleUpdateSubmit = async (event: any, selectedTags: any) => {
     event.preventDefault();
 
     const data = {
@@ -38,7 +30,7 @@ const Card = () => {
       tags: selectedTags.map((tag) => tag.id),
     };
 
-    const res = await fetch(cardEndpoint, {
+    const res = await fetch(cardEndpoint(router.query.cardId as string), {
       method: "PUT",
       body: JSON.stringify(data),
     });
@@ -53,75 +45,10 @@ const Card = () => {
       <Typography variant="h6" component="h2">
         Update card
       </Typography>
-      {!!card ? (
-        <form onSubmit={(event) => handleUpdateSubmit(event)}>
-          <FormControl margin="normal" fullWidth>
-            <TextField
-              name="title"
-              id="title"
-              label="title"
-              variant="outlined"
-              size="small"
-              fullWidth
-              defaultValue={card.title}
-            />
-          </FormControl>
 
-          <FormControl margin="normal" fullWidth>
-            <TextField
-              name="content"
-              id="content"
-              label="content"
-              variant="outlined"
-              size="small"
-              fullWidth
-              rows={3}
-              multiline
-              defaultValue={card.content}
-            />
-          </FormControl>
-
-          <Divider sx={{ my: 2 }} light />
-
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              listStyle: "none",
-              px: 0,
-            }}
-            component="ul"
-          >
-            <Autocomplete
-              value={selectedTags}
-              onChange={(event, value) => setSelectedTags(value)}
-              multiple
-              options={tags}
-              sx={{ my: 2 }}
-              fullWidth
-              // defaultValue={card.tags}
-              getOptionLabel={(option) => option.title}
-              filterSelectedOptions
-              renderInput={(params) => (
-                <TextField
-                  id="tags"
-                  name="tags"
-                  {...params}
-                  label="Add a tag"
-                  size="small"
-                  variant="outlined"
-                />
-              )}
-            />
-          </Box>
-
-          <Divider sx={{ my: 2 }} light />
-
-          <Button type="submit" variant="outlined">
-            Update card
-          </Button>
-        </form>
-      ) : null}
+      {tagsLoaded && cardLoaded && (
+        <CardForm card={card} handleSubmit={handleUpdateSubmit} tags={tags} />
+      )}
     </Paper>
   );
 };

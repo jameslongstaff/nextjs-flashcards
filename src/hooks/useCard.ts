@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 function useCard(cardId) {
   const cardEndpoint = `/api/card/${cardId}`;
   const [card, setCard] = useState(undefined);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,13 +17,14 @@ function useCard(cardId) {
         const cardResponse = await cardRes.json();
 
         setCard(cardResponse.data);
+        setLoaded(true);
       }
     };
 
     fetchData();
   }, [cardId]);
 
-  return [card, setCard];
+  return [card, setCard, loaded];
 }
 
 export default useCard;

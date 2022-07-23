@@ -6,18 +6,6 @@ const Nav = () => {
   return (
     <nav>
       <MenuList>
-        {/* <Link href="/pack" passHref>
-          <MenuItem LinkComponent={"a"}>
-            <ListItemText>Packs</ListItemText>
-          </MenuItem>
-        </Link>
-
-        <Link href={`/pack/create`}>
-          <MenuItem LinkComponent={"a"}>
-            <ListItemText>Create pack</ListItemText>
-          </MenuItem>
-        </Link> */}
-
         <Link href={`/card`}>
           <MenuItem LinkComponent={"a"}>
             <ListItemText>Cards</ListItemText>
@@ -27,6 +15,12 @@ const Nav = () => {
         <Link href={`/tag`}>
           <MenuItem LinkComponent={"a"}>
             <ListItemText>Tags</ListItemText>
+          </MenuItem>
+        </Link>
+
+        <Link href={`/preview`}>
+          <MenuItem LinkComponent={"a"}>
+            <ListItemText>Preview</ListItemText>
           </MenuItem>
         </Link>
       </MenuList>
