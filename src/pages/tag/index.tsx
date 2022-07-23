@@ -9,6 +9,8 @@ import {
 import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
+import Listing from "../../components/Listing";
+import mapTagsToListings from "../../functions/mapper/mapTagsToListings";
 
 const Packs = () => {
   const [tags, setTags] = useState([]);
@@ -44,19 +46,7 @@ const Packs = () => {
           </Button>
         </Link>
 
-        <List>
-          {!!tags && tags.length
-            ? tags.map((tag) => {
-                return (
-                  <Link href={`/tag/${tag.id}`} passHref key={tag.id}>
-                    <ListItem button key={tag.id} component="a">
-                      <ListItemText primary={`${tag.title}`} />
-                    </ListItem>
-                  </Link>
-                );
-              })
-            : null}
-        </List>
+        {!!tags && tags.length && <Listing items={mapTagsToListings(tags)} />}
       </Paper>
     </>
   );

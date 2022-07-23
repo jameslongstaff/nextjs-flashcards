@@ -1,70 +1,45 @@
-import { Card, PrismaClient } from "@prisma/client";
+import { Card } from "@prisma/client";
+import getPrismaClient from "../../utils/getPrismaClient";
 
 export const getCard = async (id: string): Promise<Card> => {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
-  const card = await prisma.card.findUnique({
+  return prisma.card.findUnique({
     where: { id },
     include: {
       tags: true,
     },
   });
-
-  prisma.$disconnect();
-
-  return card;
 };
 
 export const getCards = async (): Promise<Card[]> => {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
-  const cards = await prisma.card.findMany();
-
-  prisma.$disconnect;
-
-  return cards;
+  return prisma.card.findMany();
 };
 
-// export const getCardsByPackId = async (packId: string) => {
-//   const prisma = new PrismaClient();
+export const createCard = async (card: Card): Promise<Card> => {
+  const prisma = getPrismaClient();
 
-//   const cards = await prisma.card.findMany({ where: { packId } });
-
-//   prisma.$disconnect;
-
-//   return cards;
-// };
-
-export const createCard = async (card: Card): Promise<void> => {
-  const prisma = new PrismaClient();
-
-  await prisma.card.create({
+  return prisma.card.create({
     data: card,
   });
-
-  prisma.$disconnect();
 };
 
 export const updateCard = async (id: string, card: any): Promise<Card> => {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
-  const response = await prisma.card.update({
+  return prisma.card.update({
     where: { id },
     data: card,
     include: {
       tags: true,
     },
   });
-
-  await prisma.$disconnect();
-
-  return response;
 };
 
-export const deleteCard = async (id: string): Promise<void> => {
-  const prisma = new PrismaClient();
+export const deleteCard = async (id: string): Promise<Card> => {
+  const prisma = getPrismaClient();
 
-  await prisma.card.delete({ where: { id } });
-
-  prisma.$disconnect();
+  return prisma.card.delete({ where: { id } });
 };

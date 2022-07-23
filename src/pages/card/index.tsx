@@ -1,17 +1,11 @@
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Paper, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
+import Listing from "../../components/Listing";
+import mapCardsToListings from "../../functions/mapper/mapCardsToListings";
 import useCards from "../../hooks/useCards";
 
-const Packs = () => {
+const Cards = () => {
   const [cards, setCards] = useCards();
 
   const cardEndpoint = `/api/card/`;
@@ -19,8 +13,6 @@ const Packs = () => {
   const handleDelete = async (event: any, cardId: string) => {
     event.stopPropagation();
     event.preventDefault();
-
-    console.log("delete", cardId);
 
     const res = await fetch(`${cardEndpoint}/${cardId}`, {
       method: "DELETE",
@@ -54,25 +46,15 @@ const Packs = () => {
           fullWidth
         />
 
-        <List>
-          {!!cards && cards.length
-            ? cards.map((card) => {
-                return (
-                  <Link href={`/card/${card.id}`} passHref key={card.id}>
-                    <ListItem button key={card.id} component="a">
-                      <ListItemText primary={`${card.title}`} />
-                      <Button onClick={(event) => handleDelete(event, card.id)}>
-                        Delete
-                      </Button>
-                    </ListItem>
-                  </Link>
-                );
-              })
-            : null}
-        </List>
+        {!!cards && cards.length && (
+          <Listing
+            items={mapCardsToListings(cards)}
+            deleteHandler={handleDelete}
+          />
+        )}
       </Paper>
     </>
   );
 };
 
-export default Packs;
+export default Cards;

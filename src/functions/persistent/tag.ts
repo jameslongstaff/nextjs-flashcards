@@ -1,50 +1,37 @@
-import { Tag, PrismaClient } from "@prisma/client";
+import { Tag } from "@prisma/client";
+import getPrismaClient from "../../utils/getPrismaClient";
 
 export const getTag = async (id: string): Promise<Tag> => {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
-  const tag = await prisma.tag.findUnique({ where: { id } });
-
-  prisma.$disconnect();
-
-  return tag;
+  return prisma.tag.findUnique({ where: { id } });
 };
 
 export const getTags = async (): Promise<Tag[]> => {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
-  const tags = await prisma.tag.findMany();
-
-  prisma.$disconnect;
-
-  return tags;
+  return prisma.tag.findMany();
 };
 
-export const createTag = async (tag: Tag): Promise<void> => {
-  const prisma = new PrismaClient();
+export const createTag = async (tag: Tag): Promise<Tag> => {
+  const prisma = getPrismaClient();
 
-  await prisma.tag.create({
+  return prisma.tag.create({
     data: tag,
   });
-
-  prisma.$disconnect();
 };
 
-export const updateTag = async (id: string, tag: Tag): Promise<void> => {
-  const prisma = new PrismaClient();
+export const updateTag = async (id: string, tag: Tag): Promise<Tag> => {
+  const prisma = getPrismaClient();
 
-  await prisma.tag.update({
+  return prisma.tag.update({
     where: { id },
     data: tag,
   });
-
-  await prisma.$disconnect();
 };
 
-export const deleteTag = async (id: string): Promise<void> => {
-  const prisma = new PrismaClient();
+export const deleteTag = async (id: string): Promise<Tag> => {
+  const prisma = getPrismaClient();
 
-  await prisma.tag.delete({ where: { id } });
-
-  prisma.$disconnect();
+  return prisma.tag.delete({ where: { id } });
 };

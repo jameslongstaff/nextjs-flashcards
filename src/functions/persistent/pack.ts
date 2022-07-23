@@ -1,50 +1,37 @@
-import { Pack, PrismaClient } from "@prisma/client";
+import { Pack } from "@prisma/client";
+import getPrismaClient from "../../utils/getPrismaClient";
 
 export const getPacks = async (): Promise<Pack[]> => {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
-  const packs = await prisma.pack.findMany();
-
-  await prisma.$disconnect();
-
-  return packs;
+  return prisma.pack.findMany();
 };
 
 export const getPack = async (id: string): Promise<Pack> => {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
-  const pack = await prisma.pack.findUnique({ where: { id } });
-
-  prisma.$disconnect();
-
-  return pack;
+  return prisma.pack.findUnique({ where: { id } });
 };
 
-export const createPack = async (pack: Pack): Promise<void> => {
-  const prisma = new PrismaClient();
+export const createPack = async (pack: Pack): Promise<Pack> => {
+  const prisma = getPrismaClient();
 
-  await prisma.pack.create({
+  return prisma.pack.create({
     data: pack,
   });
-
-  await prisma.$disconnect();
 };
 
-export const updatePack = async (id: string, pack: Pack): Promise<void> => {
-  const prisma = new PrismaClient();
+export const updatePack = async (id: string, pack: Pack): Promise<Pack> => {
+  const prisma = getPrismaClient();
 
-  await prisma.pack.update({
+  return prisma.pack.update({
     where: { id },
     data: pack,
   });
-
-  await prisma.$disconnect();
 };
 
-export const deletePack = async (id: string): Promise<void> => {
-  const prisma = new PrismaClient();
+export const deletePack = async (id: string): Promise<Pack> => {
+  const prisma = getPrismaClient();
 
-  await prisma.pack.delete({ where: { id } });
-
-  prisma.$disconnect();
+  return prisma.pack.delete({ where: { id } });
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Autocomplete,
   Box,
@@ -12,10 +12,11 @@ import {
   Typography,
 } from "@mui/material";
 import useTags from "../../hooks/useTags";
+import CardForm from "../../components/CardForm";
 
 const Card = () => {
   const router = useRouter();
-  const tags = useTags();
+  const [tags, tagsLoaded] = useTags();
   const [selectedTags, setSelectedTags] = useState([]);
 
   const cardEndpoint = `/api/card/${router.query.cardId}`;
@@ -42,70 +43,8 @@ const Card = () => {
       <Typography variant="h6" component="h2">
         Create Card
       </Typography>
-      <form onSubmit={(event) => handleCreateSubmit(event)}>
-        <FormControl margin="normal" fullWidth>
-          <TextField
-            name="title"
-            id="title"
-            label="title"
-            variant="outlined"
-            size="small"
-            fullWidth
-          />
-        </FormControl>
 
-        <FormControl margin="normal" fullWidth>
-          <TextField
-            name="content"
-            id="content"
-            label="content"
-            variant="outlined"
-            size="small"
-            fullWidth
-            rows={3}
-            multiline
-          />
-        </FormControl>
-
-        <Divider sx={{ my: 2 }} light />
-
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            listStyle: "none",
-            px: 0,
-          }}
-          component="ul"
-        >
-          <Autocomplete
-            value={selectedTags}
-            onChange={(event, value) => setSelectedTags(value)}
-            multiple
-            options={tags}
-            sx={{ my: 2 }}
-            fullWidth
-            getOptionLabel={(option) => option.title}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                id="tags"
-                name="tags"
-                {...params}
-                label="Add a tag"
-                size="small"
-                variant="outlined"
-              />
-            )}
-          />
-        </Box>
-
-        <Divider sx={{ my: 2 }} light />
-
-        <Button type="submit" variant="outlined">
-          Create card
-        </Button>
-      </form>
+      {tagsLoaded && <CardForm handleSubmit={handleCreateSubmit} tags={tags} />}
     </Paper>
   );
 };
