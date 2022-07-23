@@ -20,11 +20,21 @@ export default async function handler(
   if (req.method === "PUT") {
     const body = JSON.parse(req.body);
 
-    const card = { ...body };
+    const card = {
+      title: body.title,
+      content: body.content,
+      tags: {
+        set: body.tags.map((tagId) => {
+          return {
+            id: tagId,
+          };
+        }),
+      },
+    };
 
-    await updateCard(cardId as string, card);
+    const cardRes = await updateCard(cardId as string, card);
 
-    res.status(200).json({ status: "success", data: card });
+    res.status(200).json({ status: "success", data: cardRes });
   }
 
   if (req.method === "DELETE") {

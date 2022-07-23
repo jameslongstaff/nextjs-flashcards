@@ -1,10 +1,12 @@
 import React from "react";
-import Link from "next/link";
+import Chip from "@mui/material/Chip";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
+  Autocomplete,
   Box,
   Button,
+  Divider,
   FormControl,
   Paper,
   TextField,
@@ -14,8 +16,11 @@ import {
 const Card = () => {
   const router = useRouter();
   const [card, setCard] = useState(undefined);
+  const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const cardEndpoint = `/api/card/${router.query.cardId}`;
+  const tagsEndpoint = `/api/tag`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,11 +29,30 @@ const Card = () => {
           method: "GET",
         };
 
-        const packCardRes = await fetch(cardEndpoint, fetchParams);
+        const cardRes = await fetch(cardEndpoint, fetchParams);
 
-        const packCardResponse = await packCardRes.json();
+        const cardResponse = await cardRes.json();
 
-        setCard(packCardResponse.data);
+        setCard(cardResponse.data);
+        setSelectedTags(cardResponse.data.tags);
+      }
+    };
+
+    fetchData();
+  }, [router.query.cardId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (router.query.cardId) {
+        const fetchParams = {
+          method: "GET",
+        };
+
+        const tagsRes = await fetch(tagsEndpoint, fetchParams);
+
+        const tagsResponse = await tagsRes.json();
+
+        setTags(tagsResponse.data);
       }
     };
 
@@ -41,7 +65,7 @@ const Card = () => {
     const data = {
       title: event.target.title.value,
       content: event.target.content.value,
-      packId: card.packId,
+      tags: selectedTags.map((tag) => tag.id),
     };
 
     const res = await fetch(cardEndpoint, {
@@ -86,6 +110,42 @@ const Card = () => {
               defaultValue={card.content}
             />
           </FormControl>
+
+          <Divider sx={{ my: 2 }} light />
+
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              listStyle: "none",
+              px: 0,
+            }}
+            component="ul"
+          >
+            <Autocomplete
+              value={selectedTags}
+              onChange={(event, value) => setSelectedTags(value)}
+              multiple
+              options={tags}
+              sx={{ my: 2 }}
+              fullWidth
+              // defaultValue={card.tags}
+              getOptionLabel={(option) => option.title}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  id="tags"
+                  name="tags"
+                  {...params}
+                  label="Add a tag"
+                  size="small"
+                  variant="outlined"
+                />
+              )}
+            />
+          </Box>
+
+          <Divider sx={{ my: 2 }} light />
 
           <Button type="submit" variant="outlined">
             Update card

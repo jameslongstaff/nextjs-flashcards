@@ -19,22 +19,11 @@ model Card {
   id String @id
   title String
   content String
-  tags CardTags[]
+  tags Tag[] @relation("CardTags")
 }
 
 model Tag {
   id String @id
   title String
-  cards CardTags[]
-}
-
-model CardTags {
-  card Card @relation(fields: [cardId], references: [id])
-  cardId String
-  tag Tag @relation(fields: [tagId], references: [id])
-  tagId String
-  assignedAt DateTime @default(now())
-  assignedBy String
-
-  @@id([cardId, tagId])
+  cards Card[] @relation("CardTags")
 }
