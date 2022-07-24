@@ -2,6 +2,7 @@ import { Button, Paper, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import Listing from "../../components/Listing";
+import fetchToJson from "../../functions/fetchToJSON";
 import toListing from "../../functions/mapper/cardToListing";
 import useCards from "../../hooks/useCards";
 
@@ -14,11 +15,11 @@ const Cards = () => {
     event.stopPropagation();
     event.preventDefault();
 
-    const res = await fetch(`${cardEndpoint}/${cardId}`, {
+    const params = {
       method: "DELETE",
-    });
+    };
 
-    await res.json();
+    await fetchToJson(`${cardEndpoint}/${cardId}`, params);
 
     setCards(cards.filter((card) => card.id !== cardId));
   };

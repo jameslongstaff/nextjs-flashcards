@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import fetchToJson from "../functions/fetchToJSON";
 
 function useCard(cardId) {
   const cardEndpoint = `/api/card/${cardId}`;
@@ -12,11 +13,9 @@ function useCard(cardId) {
           method: "GET",
         };
 
-        const cardRes = await fetch(cardEndpoint, fetchParams);
+        const response = await fetchToJson(cardEndpoint, fetchParams);
 
-        const cardResponse = await cardRes.json();
-
-        setCard(cardResponse.data);
+        setCard(response.data);
         setLoaded(true);
       }
     };

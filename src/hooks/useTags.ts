@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import fetchToJson from "../functions/fetchToJSON";
 
 function useTags() {
   const [tags, setTags] = useState([]);
@@ -12,11 +13,9 @@ function useTags() {
         method: "GET",
       };
 
-      const tagsRes = await fetch(tagsEndpoint, fetchParams);
+      const response = await fetchToJson(tagsEndpoint, fetchParams);
 
-      const tagsResponse = await tagsRes.json();
-
-      setTags(tagsResponse.data);
+      setTags(response.data);
       setLoaded(true);
     };
 

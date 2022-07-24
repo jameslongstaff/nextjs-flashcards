@@ -1,16 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Divider,
-  FormControl,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import useTags from "../../hooks/useTags";
 import CardForm from "../../components/CardForm";
 

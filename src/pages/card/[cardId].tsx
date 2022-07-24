@@ -5,6 +5,7 @@ import useTags from "../../hooks/useTags";
 import useCard from "../../hooks/useCard";
 import { cardEndpoint } from "../../functions/endpoints";
 import CardForm from "../../components/CardForm";
+import fetchToJson from "../../functions/fetchToJSON";
 
 const Card = () => {
   const router = useRouter();
@@ -20,12 +21,15 @@ const Card = () => {
       tags: selectedTags.map((tag) => tag.id),
     };
 
-    const res = await fetch(cardEndpoint(router.query.cardId as string), {
+    const params = {
       method: "PUT",
       body: JSON.stringify(data),
-    });
+    };
 
-    const response = await res.json();
+    const response = await fetchToJson(
+      cardEndpoint(router.query.cardId as string),
+      params
+    );
 
     setCard(response.data);
   };

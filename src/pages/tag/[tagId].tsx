@@ -8,6 +8,7 @@ import {
 import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
+import fetchToJson from "../../functions/fetchToJSON";
 
 const Tag = () => {
   const router = useRouter();
@@ -21,9 +22,10 @@ const Tag = () => {
         const fetchParams = {
           method: "GET",
         };
-        const tagRes = await fetch(tagEndpoint, fetchParams);
-        const tagResponse = await tagRes.json();
-        setTag(tagResponse.data);
+
+        const response = await fetchToJson(tagEndpoint, fetchParams);
+
+        setTag(response.data);
       }
     };
     fetchData();

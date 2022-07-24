@@ -7,7 +7,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const card = await getCards();
+    const card = await getCards({
+      tags: req.query?.tags,
+    });
 
     res.status(200).json({ status: "success", data: card });
   }

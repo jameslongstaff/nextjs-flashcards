@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const getPrismaClient = () => {
+const getPrismaClient = (): PrismaClient => {
   if (!global.prisma) {
     global.prisma = new PrismaClient();
   }

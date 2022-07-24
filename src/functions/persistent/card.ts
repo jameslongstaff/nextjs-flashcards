@@ -1,4 +1,4 @@
-import { Card } from "@prisma/client";
+import { Card, Prisma } from "@prisma/client";
 import getPrismaClient from "../../utils/getPrismaClient";
 
 export const getCard = async (id: string): Promise<Card> => {
@@ -12,10 +12,26 @@ export const getCard = async (id: string): Promise<Card> => {
   });
 };
 
-export const getCards = async (): Promise<Card[]> => {
+export const getCards = async (options?: any): Promise<Card[]> => {
   const prisma = getPrismaClient();
 
-  return prisma.card.findMany();
+  let args: Prisma.CardFindManyArgs = undefined;
+
+  if (options?.tags) {
+    args = {
+      where: {
+        tags: {
+          some: {
+            id: {
+              in: options.tags,
+            },
+          },
+        },
+      },
+    };
+  }
+
+  return prisma.card.findMany(args);
 };
 
 export const createCard = async (card: Card): Promise<Card> => {

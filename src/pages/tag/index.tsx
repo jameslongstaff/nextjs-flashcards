@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
 import Listing from "../../components/Listing";
+import fetchToJson from "../../functions/fetchToJSON";
 import toListing from "../../functions/mapper/tagToListing";
 
 const Packs = () => {
@@ -16,11 +17,9 @@ const Packs = () => {
         method: "GET",
       };
 
-      const tagRes = await fetch(tagEndpoint, fetchParams);
+      const response = await fetchToJson(tagEndpoint, fetchParams);
 
-      const tagResponse = await tagRes.json();
-
-      setTags(tagResponse.data);
+      setTags(response.data);
     };
 
     fetchData();
