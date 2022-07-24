@@ -1,6 +1,5 @@
-import { Card, Tag } from "@prisma/client";
-
-type CardWithTags = Card & { tags: Tag[] };
+import { Tag } from "@prisma/client";
+import { CardWithTags } from "../../types/CardWithTags";
 
 type CardFormPropsType = {
   card: CardWithTags;

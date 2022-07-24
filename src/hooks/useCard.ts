@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { CardWithTags } from "../types/CardWithTags";
 import fetchToJson from "../utils/fetchToJson";
 
-function useCard(cardId) {
+type useCardReturnType = [
+  card: CardWithTags,
+  setCard: React.Dispatch<any>,
+  loaded: boolean
+];
+
+function useCard(cardId: string): useCardReturnType {
   const cardEndpoint = `/api/card/${cardId}`;
   const [card, setCard] = useState(undefined);
   const [loaded, setLoaded] = useState(false);

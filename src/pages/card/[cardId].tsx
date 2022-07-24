@@ -10,7 +10,7 @@ import fetchToJson from "../../utils/fetchToJson";
 const Card = () => {
   const router = useRouter();
   const [tags, tagsLoaded] = useTags();
-  const [card, setCard, cardLoaded] = useCard(router.query.cardId);
+  const [card, setCard, cardLoaded] = useCard(router.query.cardId as string);
 
   const handleUpdateSubmit = async (event: any, selectedTags: any) => {
     event.preventDefault();

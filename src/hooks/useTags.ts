@@ -1,7 +1,8 @@
+import { Tag } from "@prisma/client";
 import React, { useState, useEffect } from "react";
 import fetchToJson from "../utils/fetchToJson";
 
-function useTags() {
+function useTags(): [tags: Tag[], loaded: boolean] {
   const [tags, setTags] = useState([]);
   const [loaded, setLoaded] = useState(false);
 

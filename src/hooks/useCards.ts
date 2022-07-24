@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { CardWithTags } from "../types/CardWithTags";
 import fetchToJson from "../utils/fetchToJson";
 
-const buildQueryString = (items: any[], key: string) => {
+type useCardsReturnType = [
+  cards: CardWithTags[],
+  setCards: React.Dispatch<any>,
+  setOptions: React.Dispatch<any>,
+  setCards: React.Dispatch<any>
+];
+
+const buildQueryString = (items: { id: string }[], key: string): string => {
   return items.reduce((acc, item) => {
     return `${acc}&${key}=${item.id}`;
   }, "");
 };
 
-function useCards(opts?: any) {
+function useCards(opts?: any): useCardsReturnType {
   const cardEndpoint = `/api/card`;
   const [cards, setCards] = useState(undefined);
   const [options, setOptions] = useState(opts);
