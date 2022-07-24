@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import {
-  deleteCard,
   getCard,
   updateCard,
-} from "../../../functions/persistent/card";
+  deleteCard,
+} from "../../../utils/persistent/card";
 
 export default async function handler(
   req: NextApiRequest,

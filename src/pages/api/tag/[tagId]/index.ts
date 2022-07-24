@@ -1,10 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
-import {
-  deleteTag,
-  getTag,
-  updateTag,
-} from "../../../../functions/persistent/tag";
+import { deleteTag, getTag, updateTag } from "../../../../utils/persistent/tag";
 
 export default async function handler(
   req: NextApiRequest,

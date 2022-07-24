@@ -2,9 +2,9 @@ import { Button, Paper, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import Listing from "../../components/Listing/Listing";
-import fetchToJson from "../../functions/fetchToJSON";
-import toListing from "../../functions/mapper/cardToListing";
+import toListing from "../../utils/mapper/cardToListing";
 import useCards from "../../hooks/useCards";
+import fetchToJson from "../../utils/fetchToJson";
 
 const Cards = () => {
   const [cards, setCards] = useCards();

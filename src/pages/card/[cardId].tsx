@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { Paper, Typography } from "@mui/material";
 import useTags from "../../hooks/useTags";
 import useCard from "../../hooks/useCard";
-import { cardEndpoint } from "../../functions/endpoints";
 import CardForm from "../../components/CardForm/CardForm";
-import fetchToJson from "../../functions/fetchToJSON";
+import { cardEndpoint } from "../../utils/endpoints";
+import fetchToJson from "../../utils/fetchToJson";
 
 const Card = () => {
   const router = useRouter();

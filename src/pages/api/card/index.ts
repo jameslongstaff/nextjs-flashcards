@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createCard, getCards } from "../../../functions/persistent/card";
 import { v4 } from "uuid";
+import { getCards, createCard } from "../../../utils/persistent/card";
 
 export default async function handler(
   req: NextApiRequest,

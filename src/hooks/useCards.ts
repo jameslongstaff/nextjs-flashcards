@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import fetchToJson from "../functions/fetchToJSON";
+import fetchToJson from "../utils/fetchToJson";
 
 const buildQueryString = (items: any[], key: string) => {
   return items.reduce((acc, item) => {

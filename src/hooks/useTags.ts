@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import fetchToJson from "../functions/fetchToJSON";
+import fetchToJson from "../utils/fetchToJson";
 
 function useTags() {
   const [tags, setTags] = useState([]);

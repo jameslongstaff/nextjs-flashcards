@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
-import fetchToJson from "../../functions/fetchToJSON";
+import fetchToJson from "../../utils/fetchToJson";
 
 const Tag = () => {
   const router = useRouter();

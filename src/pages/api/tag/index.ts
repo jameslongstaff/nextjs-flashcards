@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { v4 } from "uuid";
 import {
-  createTag,
-  deleteTag,
   getTags,
   updateTag,
-} from "../../../functions/persistent/tag";
-import { v4 } from "uuid";
+  createTag,
+  deleteTag,
+} from "../../../utils/persistent/tag";
 
 export default async function handler(
   req: NextApiRequest,
