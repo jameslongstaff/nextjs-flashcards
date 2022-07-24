@@ -2,7 +2,7 @@ import { Button, Paper, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
-import Listing from "../../components/Listing";
+import Listing from "../../components/Listing/Listing";
 import fetchToJson from "../../functions/fetchToJSON";
 import toListing from "../../functions/mapper/tagToListing";
 

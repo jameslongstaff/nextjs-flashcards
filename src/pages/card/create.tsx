@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Paper, Typography } from "@mui/material";
 import useTags from "../../hooks/useTags";
-import CardForm from "../../components/CardForm";
+import CardForm from "../../components/CardForm/CardForm";
 
 const Card = () => {
   const router = useRouter();

@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../components/Nav";
+import Nav from "../components/Nav/Nav";
 import Head from "next/head";
 import { Container, CssBaseline, Grid, ThemeProvider } from "@mui/material";
 import theme from "../theme";

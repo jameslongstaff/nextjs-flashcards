@@ -2,13 +2,11 @@ import {
   Autocomplete,
   Box,
   Button,
-  Card,
-  CardContent,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import FlashCard from "../../components/FlashCard";
+import FlashCard from "../../components/FlashCard/FlashCard";
 import useCards from "../../hooks/useCards";
 import useTags from "../../hooks/useTags";
 import shuffleArray from "../../utils/shuffleArray";
@@ -32,7 +30,7 @@ const Preview = () => {
     }
   }, [cards]);
 
-  const getPage = () => {
+  const getPage = (): string => {
     if (!cards?.length || !currentCard || !selectedTags) {
       return null;
     }

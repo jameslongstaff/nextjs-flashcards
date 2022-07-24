@@ -1,13 +1,9 @@
 import { Button, List, ListItem, ListItemText } from "@mui/material";
 import Link from "next/link";
 import * as React from "react";
+import ListingPropsType from "./ListingPropsType";
 
-export type ListingItemType = {
-  id: string;
-  title: string;
-};
-
-const Listing = (props: any) => {
+const Listing = (props: ListingPropsType) => {
   const { items } = props;
 
   return (

@@ -1,7 +1,8 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import React, { useState } from "react";
+import FlashCardPropsType from "./FlashCardPropsType";
 
-const FlashCard = (props: any) => {
+const FlashCard = (props: FlashCardPropsType) => {
   const [flipped, setFlipped] = useState(false);
 
   return (

@@ -7,8 +7,9 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import CardFormPropsType from "./CardFormPropsType";
 
-const CardForm = (props: any) => {
+const CardForm = (props: CardFormPropsType) => {
   const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
