@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import fetchToJson from "../functions/fetchToJSON";
 
+const buildQueryString = (items: any[], key: string) => {
+  return items.reduce((acc, item) => {
+    return `${acc}&${key}=${item.id}`;
+  }, "");
+};
+
 function useCards(opts?: any) {
   const cardEndpoint = `/api/card`;
   const [cards, setCards] = useState(undefined);
   const [options, setOptions] = useState(opts);
 
+  // useMemo?
   useEffect(() => {
     const fetchData = async () => {
       const fetchParams = {
@@ -14,18 +21,12 @@ function useCards(opts?: any) {
 
       let queryString = "";
 
-      const buildQueryString = (items: any[], key: string) => {
-        return items.reduce((acc, item) => {
-          return `${acc}&${key}=${item.id}`;
-        }, "?");
-      };
-
       if (options?.tags.length) {
         queryString += buildQueryString(options.tags, "tags");
       }
 
       const response = await fetchToJson(
-        `${cardEndpoint}${queryString}`,
+        `${cardEndpoint}${queryString ? `?${queryString}` : ""}`,
         fetchParams
       );
 
@@ -35,7 +36,7 @@ function useCards(opts?: any) {
     fetchData();
   }, [options]);
 
-  return [cards, setCards, setOptions];
+  return [cards, setCards, setOptions, setCards];
 }
 
 export default useCards;
