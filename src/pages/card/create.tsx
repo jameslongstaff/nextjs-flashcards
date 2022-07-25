@@ -4,13 +4,12 @@ import { useState } from "react";
 import { Paper, Typography } from "@mui/material";
 import useTags from "../../hooks/useTags";
 import CardForm from "../../components/CardForm/CardForm";
+import { cardEndpoint } from "../../utils/endpoints";
 
 const Card = () => {
   const router = useRouter();
   const [tags, tagsLoaded] = useTags();
   const [selectedTags, setSelectedTags] = useState([]);
-
-  const cardEndpoint = `/api/card/${router.query.cardId}`;
 
   const handleCreateSubmit = async (event: any) => {
     event.preventDefault();
@@ -21,7 +20,7 @@ const Card = () => {
       tags: selectedTags.map((tag) => tag.id),
     };
 
-    const res = await fetch(cardEndpoint, {
+    const res = await fetch(cardEndpoint(router.query.cardId as string), {
       method: "PUT",
       body: JSON.stringify(data),
     });

@@ -1,5 +1,9 @@
 const cardEndpoint = (id?: string) => {
-  return `/api/card/${id}`;
+  return `/api/card/${id ? id : ""}`;
 };
 
-export { cardEndpoint };
+const tagEndpoint = (id?: string) => {
+  return `/api/tag/${id ? id : ""}`;
+};
+
+export { cardEndpoint, tagEndpoint };

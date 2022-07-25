@@ -5,11 +5,10 @@ import Listing from "../../components/Listing/Listing";
 import toListing from "../../utils/mapper/cardToListing";
 import useCards from "../../hooks/useCards";
 import fetchToJson from "../../utils/fetchToJson";
+import { cardEndpoint } from "../../utils/endpoints";
 
 const Cards = () => {
   const [cards, setCards] = useCards();
-
-  const cardEndpoint = `/api/card/`;
 
   const handleDelete = async (event: any, cardId: string) => {
     event.stopPropagation();
@@ -19,7 +18,7 @@ const Cards = () => {
       method: "DELETE",
     };
 
-    await fetchToJson(`${cardEndpoint}/${cardId}`, params);
+    await fetchToJson(cardEndpoint(cardId), params);
 
     setCards(cards.filter((card) => card.id !== cardId));
   };

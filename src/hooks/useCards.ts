@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { CardWithTags } from "../types/CardWithTags";
+import { cardEndpoint } from "../utils/endpoints";
 import fetchToJson from "../utils/fetchToJson";
 
 type useCardsReturnType = [
@@ -16,12 +17,10 @@ const buildQueryString = (items: { id: string }[], key: string): string => {
 };
 
 function useCards(opts?: any): useCardsReturnType {
-  const cardEndpoint = `/api/card`;
   const [cards, setCards] = useState(undefined);
   const [options, setOptions] = useState(opts);
 
-  // useMemo?
-  useEffect(() => {
+  useMemo(() => {
     const fetchData = async () => {
       const fetchParams = {
         method: "GET",
@@ -34,7 +33,7 @@ function useCards(opts?: any): useCardsReturnType {
       }
 
       const response = await fetchToJson(
-        `${cardEndpoint}${queryString ? `?${queryString}` : ""}`,
+        `${cardEndpoint()}${queryString ? `?${queryString}` : ""}`,
         fetchParams
       );
 

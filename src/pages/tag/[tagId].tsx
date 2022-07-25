@@ -7,29 +7,12 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
-import { useEffect, useState } from "react";
-import fetchToJson from "../../utils/fetchToJson";
+import useTag from "../../hooks/useTag";
+import { tagEndpoint } from "../../utils/endpoints";
 
 const Tag = () => {
   const router = useRouter();
-  const [tag, setTag] = useState(undefined);
-
-  const tagEndpoint = `/api/tag/${router.query.tagId}`;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (router.query.tagId) {
-        const fetchParams = {
-          method: "GET",
-        };
-
-        const response = await fetchToJson(tagEndpoint, fetchParams);
-
-        setTag(response.data);
-      }
-    };
-    fetchData();
-  }, [router.query.tagId]);
+  const [tag, setTag] = useTag(router.query.tagId as string);
 
   const handleUpdateSubmit = async (event: any) => {
     event.preventDefault();
@@ -38,7 +21,7 @@ const Tag = () => {
       title: event.target.title.value,
     };
 
-    const res = await fetch(tagEndpoint, {
+    const res = await fetch(tagEndpoint(router.query.tagId as string), {
       method: "PUT",
       body: JSON.stringify(data),
     });
@@ -56,7 +39,7 @@ const Tag = () => {
       {!!tag ? (
         <form
           method="PUT"
-          action={tagEndpoint}
+          action={tagEndpoint(router.query.tagId as string)}
           onSubmit={(event) => handleUpdateSubmit(event)}
         >
           <FormControl margin="normal" fullWidth>

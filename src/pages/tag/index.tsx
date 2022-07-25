@@ -3,13 +3,12 @@ import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
 import Listing from "../../components/Listing/Listing";
+import { tagEndpoint } from "../../utils/endpoints";
 import fetchToJson from "../../utils/fetchToJson";
 import toListing from "../../utils/mapper/tagToListing";
 
 const Packs = () => {
   const [tags, setTags] = useState([]);
-
-  const tagEndpoint = `/api/tag/`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +16,7 @@ const Packs = () => {
         method: "GET",
       };
 
-      const response = await fetchToJson(tagEndpoint, fetchParams);
+      const response = await fetchToJson(tagEndpoint(), fetchParams);
 
       setTags(response.data);
     };

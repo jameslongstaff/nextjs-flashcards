@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react";
 import { tagEndpoint } from "../utils/endpoints";
 import fetchToJson from "../utils/fetchToJson";
 
-function useTags(): [tags: Tag[], loaded: boolean] {
-  const [tags, setTags] = useState([]);
+function useTag(
+  tagId: string
+): [tag: Tag, setTag: React.Dispatch<any>, loaded: boolean] {
+  const [tag, setTag] = useState(undefined);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -13,16 +15,14 @@ function useTags(): [tags: Tag[], loaded: boolean] {
         method: "GET",
       };
 
-      const response = await fetchToJson(tagEndpoint(), fetchParams);
+      const response = await fetchToJson(tagEndpoint(tagId), fetchParams);
 
-      setTags(response.data);
-      setLoaded(true);
+      setTag(response.data);
     };
-
     fetchData();
   }, []);
 
-  return [tags, loaded];
+  return [tag, setTag, loaded];
 }
 
-export default useTags;
+export default useTag;

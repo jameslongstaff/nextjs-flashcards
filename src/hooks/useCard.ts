@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CardWithTags } from "../types/CardWithTags";
+import { cardEndpoint } from "../utils/endpoints";
 import fetchToJson from "../utils/fetchToJson";
 
 type useCardReturnType = [
@@ -9,7 +10,6 @@ type useCardReturnType = [
 ];
 
 function useCard(cardId: string): useCardReturnType {
-  const cardEndpoint = `/api/card/${cardId}`;
   const [card, setCard] = useState(undefined);
   const [loaded, setLoaded] = useState(false);
 
@@ -20,7 +20,7 @@ function useCard(cardId: string): useCardReturnType {
           method: "GET",
         };
 
-        const response = await fetchToJson(cardEndpoint, fetchParams);
+        const response = await fetchToJson(cardEndpoint(cardId), fetchParams);
 
         setCard(response.data);
         setLoaded(true);

@@ -6,10 +6,9 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { tagEndpoint } from "../../utils/endpoints";
 
 const CreateTag = () => {
-  const tagEndpoint = `/api/tag`;
-
   const handleCreateSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -17,7 +16,7 @@ const CreateTag = () => {
       title: event.target.title.value,
     };
 
-    const res = await fetch(tagEndpoint, {
+    const res = await fetch(tagEndpoint(), {
       method: "POST",
       body: JSON.stringify(data),
     });
@@ -33,7 +32,7 @@ const CreateTag = () => {
 
       <form
         method="PUT"
-        action={tagEndpoint}
+        action={tagEndpoint()}
         onSubmit={(event) => handleCreateSubmit(event)}
       >
         <FormControl margin="normal" fullWidth>
