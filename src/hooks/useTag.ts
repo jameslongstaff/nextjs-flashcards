@@ -5,7 +5,7 @@ import fetchToJson from "../utils/fetchToJson";
 
 function useTag(
   tagId: string
-): [tag: Tag, setTag: React.Dispatch<any>, loaded: boolean] {
+): [tag: Tag, setTag: React.Dispatch<Tag>, loaded: boolean] {
   const [tag, setTag] = useState(undefined);
   const [loaded, setLoaded] = useState(false);
 

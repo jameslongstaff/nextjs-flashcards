@@ -6,19 +6,20 @@ import useCard from "../../hooks/useCard";
 import CardForm from "../../components/CardForm/CardForm";
 import { cardEndpoint } from "../../utils/endpoints";
 import fetchToJson from "../../utils/fetchToJson";
+import { Tag } from "@prisma/client";
 
 const Card = () => {
   const router = useRouter();
   const [tags, tagsLoaded] = useTags();
   const [card, setCard, cardLoaded] = useCard(router.query.cardId as string);
 
-  const handleUpdateSubmit = async (event: any, selectedTags: any) => {
+  const handleUpdateSubmit = async (event: any, selectedTags: Tag[]) => {
     event.preventDefault();
 
     const data = {
       title: event.target.title.value,
       content: event.target.content.value,
-      tags: selectedTags.map((tag) => tag.id),
+      tags: selectedTags.map((tag: Tag) => tag.id),
     };
 
     const params = {

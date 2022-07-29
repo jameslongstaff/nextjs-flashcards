@@ -1,3 +1,4 @@
+import { Card } from "@prisma/client";
 import React, { useState, useEffect } from "react";
 import { CardWithTags } from "../types/CardWithTags";
 import { cardEndpoint } from "../utils/endpoints";
@@ -5,7 +6,7 @@ import fetchToJson from "../utils/fetchToJson";
 
 type useCardReturnType = [
   card: CardWithTags,
-  setCard: React.Dispatch<any>,
+  setCard: React.Dispatch<Card>,
   loaded: boolean
 ];
 

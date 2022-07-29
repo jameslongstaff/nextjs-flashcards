@@ -1,3 +1,4 @@
+import { Card, Tag } from "@prisma/client";
 import React, { useState, useMemo } from "react";
 import { CardWithTags } from "../types/CardWithTags";
 import { cardEndpoint } from "../utils/endpoints";
@@ -5,10 +6,13 @@ import fetchToJson from "../utils/fetchToJson";
 
 type useCardsReturnType = [
   cards: CardWithTags[],
-  setCards: React.Dispatch<any>,
-  setOptions: React.Dispatch<any>,
-  setCards: React.Dispatch<any>
+  setCards: React.Dispatch<Card[]>,
+  setOptions: React.Dispatch<useTagsOptions>
 ];
+
+type useTagsOptions = {
+  tags: Tag[];
+};
 
 const buildQueryString = (items: { id: string }[], key: string): string => {
   return items.reduce((acc, item) => {
@@ -16,7 +20,7 @@ const buildQueryString = (items: { id: string }[], key: string): string => {
   }, "");
 };
 
-function useCards(opts?: any): useCardsReturnType {
+function useCards(opts?: useTagsOptions): useCardsReturnType {
   const [cards, setCards] = useState(undefined);
   const [options, setOptions] = useState(opts);
 
